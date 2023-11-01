@@ -7,16 +7,32 @@ export const usePlayerStore = defineStore('player', {
     }),
     getters: {
         getNextSong(){
+            const index = this.playlist.findIndex(song => song.id === this.now_playing.id);
+            const nextIndex = index + 1;
 
+            if (nextIndex >= 0 && nextIndex < this.playlist.length) {
+                return this.playlist[nextIndex];
+            } else {
+                // Return false when there's no next song (end of playlist).
+                return false;
+            }
         },
         getPreviousSong() {
+            const index = this.playlist.findIndex(song => song.id === this.now_playing.id);
+            const previousIndex = index - 1;
 
+            if (previousIndex >= 0) {
+                return this.playlist[previousIndex];
+            } else {
+                // Return false when there is no previous song.
+                return false;
+            }
         },
         getNowPlayingSongId() {
             return this.now_playing?.id;
         },
         getNowPlaying() {
-
+            return this.now_playing;
         },
         getNowPlayingAlbumID() {
             return this.now_playing?.album?.id ?? null;
@@ -36,10 +52,10 @@ export const usePlayerStore = defineStore('player', {
     },
     actions: {
         setPlaylist(songs) {
-
+            this.playlist = songs;
         },
         setNowPlaying(song) {
-
+            this.now_playing = song;
         },
         resetNowPlaying() {
             this.now_playing = {};

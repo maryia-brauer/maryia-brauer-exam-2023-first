@@ -1,5 +1,5 @@
 import { defineStore } from 'pinia';
-import { router } from './router/index.js'; 
+import router from '@/router/index.js'; 
 
 export const useAuthStore = defineStore('auth', {
   state: () => ({
@@ -7,7 +7,7 @@ export const useAuthStore = defineStore('auth', {
       name: 'NAME',
       surname: 'SURNAME',
       code: 'IT1234',
-      favorite_songs: [], 
+      favorite_songs: JSON.parse(localStorage.getItem('favorite_songs')) || []
     },
     authenticated: false,
   }),
@@ -15,7 +15,7 @@ export const useAuthStore = defineStore('auth', {
   getters: {
     is_authenticated() {
       // Check if the is_authenticated key exists in localStorage
-      return localStorage.is_authenticated || this.authenticated;
+      return localStorage.getItem('is_authenticated') ?? this.authenticated;
     },
     getFavoriteSongs() {
       return this.user.favorite_songs;
@@ -30,9 +30,9 @@ export const useAuthStore = defineStore('auth', {
     },
     authenticate(email, password) {
       // Check if the provided email and password match your credentials
-      if (email === 'your-email@example.com' && password === '123456') {
+      if (email === 'test@q.com' && password === '123456') {
         // Set the is_authenticated key in localStorage to true
-        localStorage.is_authenticated = true;
+        localStorage.setItem('is_authenticated', true);
         // Set the authenticated variable to true
         this.authenticated = true;
         // Programatically change the router address to / (Home)
@@ -59,7 +59,7 @@ export const useAuthStore = defineStore('auth', {
       }
 
       // Store the updated favorite_songs array in localStorage
-      localStorage.favorite_songs = JSON.stringify(this.user.favorite_songs);
+      localStorage.setItem('favorite_songs', JSON.stringify(this.user.favorite_songs));
     },
   },
 });

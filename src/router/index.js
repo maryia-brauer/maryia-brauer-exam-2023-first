@@ -2,7 +2,7 @@ import {createRouter, createWebHistory} from 'vue-router'
 import { useAuthStore } from '@/stores/auth.js'; 
 import Login from '@/views/Login.vue';
 import Songs from '@/views/Songs.vue';
-import Albums from '@/views/Albums.vue';
+import Albums from '@/views/Album.vue';
 import About from '@/views/About.vue';
 
 const router = createRouter({
